@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acrylic Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      background: #f9f9f9;
+    }
+    .container {
+      display: flex;
+      max-width: 1200px;
+      width: 100%;
+      background: #fff;
+      padding: 20px;
+      gap: 20px;
+    }
+    /* Left side */
+    .left {
+      flex: 2;
+    }
+    .main-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+    }
+    .thumbnails {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .thumbnails img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 5px;
+    }
+    .thumbnails img.active {
+      border-color: #007bff;
+    }
+    .description {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #333;
+    }
+    #descriptionTitle {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    #descriptionDetails {
+      font-style: italic;
+      color: #555;
+    }
+    .custom-size {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .custom-size button {
+      margin-top: 5px;
+      padding: 8px 12px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Right side */
+    .right {
+      flex: 1;
+      padding: 15px;
+      border-left: 2px solid #eee;
+    }
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    select, input {
+      padding: 6px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .qty-control button {
+      padding: 5px 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .total {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .buy-now {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      background: green;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    /* Contact info */
+    .contact {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Side -->
+    <div class="left">
+      <img id="mainImage" src="https://via.placeholder.com/600x400" class="main-image" alt="Acrylic">
+      <div class="thumbnails">
+        <img src="img/acrylic1.jpg" data-price="500" data-desc="12 x 12 inch" 
+             data-details="High-quality acrylic sheet, ideal for picture frames and signage." class="active">
+        <img src="img/acrylic2.jpg" data-price="600" data-desc="12 x 24 inch" 
+             data-details="Durable and clear acrylic, perfect for DIY crafts and displays.">
+        <img src="img/acrylic3.jpg" data-price="700" data-desc="12 x 36 inch" 
+             data-details="UV-resistant acrylic suitable for both indoor and outdoor use.">
+        <img src="img/acrylic4.jpg" data-price="800" data-desc="12 x 48 inch" 
+             data-details="Scratch-resistant sheet with premium optical clarity.">
+        <img src="img/acrylic5.jpg" data-price="900" data-desc="12  x 60 inch" 
+             data-details="Lightweight but strong, excellent for custom signage and projects.">
+      </div>
+      
+      <div class="description">
+        <div id="descriptionTitle">Acrylic Size 1</div>
+        <div id="descriptionDetails">High-quality acrylic sheet, ideal for picture frames and signage.</div>
+      </div>
+
+      <div class="custom-size">
+        Need Custom Size?  
+        <button onclick="alert('Contact us for custom sizes!')">Click Here</button>
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="right">
+      <div class="price">₱ <span id="price">500</span></div>
+      <label for="thickness">Select Thickness</label>
+      <select id="thickness">
+        <option>1.5mm</option>
+        <option>2mm</option>
+        <option>3mm</option>
+        <option>4mm</option>
+        <option>4.5mm</option>
+        <option>5mm</option>
+        <option>6mm</option>
+      </select>
+
+      <label>Quantity</label>
+      <div class="qty-control">
+        <button onclick="updateQty(-1)">-</button>
+        <input type="number" id="qty" value="1" min="1">
+        <button onclick="updateQty(1)">+</button>
+      </div>
+
+      <div class="total">Total: ₱ <span id="total">500</span></div>
+      <button class="buy-now" id="buyNowBtn">Buy Now</button>
+
+      <div class="contact">
+        <p><strong>Contact Us:</strong></p>
+        <p>Email: alvin.galsim@gmail.com</p>
+        <p>Phone: +63 9099762605</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  const mainImage = document.getElementById("mainImage");
+  const priceElement = document.getElementById("price");
+  const totalElement = document.getElementById("total");
+  const qtyInput = document.getElementById("qty");
+  const thicknessSelect = document.getElementById("thickness");
+
+  let basePrice = 500;
+
+  const thicknessExtra = {
+    "1.5mm": 0,
+    "2mm": 50,
+    "3mm": 75,
+    "4mm": 100,
+    "4.5mm": 125,
+    "5mm": 150,
+    "6mm": 175
+  };
+
+  function selectThumbnail(img) {
+    document.querySelectorAll(".thumbnails img").forEach(i => i.classList.remove("active"));
+    img.classList.add("active");
+    mainImage.src = img.src;
+    document.getElementById("descriptionTitle").textContent = img.dataset.desc;
+    document.getElementById("descriptionDetails").textContent = img.dataset.details;
+    basePrice = parseInt(img.dataset.price);
+    updatePrice();
+  }
+
+  function updatePrice() {
+    const thickness = thicknessSelect.value;
+    const extra = thicknessExtra[thickness] || 0;
+    const priceWithThickness = basePrice + extra;
+    priceElement.textContent = priceWithThickness;
+    updateTotal();
+  }
+
+  function updateQty(change) {
+    let qty = parseInt(qtyInput.value) + change;
+    if (qty < 1) qty = 1;
+    qtyInput.value = qty;
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const thickness = thicknessSelect.value;
+    const extra = thicknessExtra[thickness] || 0;
+    const priceWithThickness = basePrice + extra;
+    const qty = parseInt(qtyInput.value);
+    const total = priceWithThickness * qty;
+    totalElement.textContent = total;
+  }
+
+  document.querySelectorAll(".thumbnails img").forEach(img => {
+    img.addEventListener("click", () => selectThumbnail(img));
+  });
+
+  thicknessSelect.addEventListener("change", () => updatePrice());
+  qtyInput.addEventListener("input", updateTotal);
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const firstThumb = document.querySelector(".thumbnails img");
+    if (firstThumb) selectThumbnail(firstThumb);
+    thicknessSelect.value = "1.5mm";
+    updatePrice();
+  });
+
+  // Redirect Buy Now button to Facebook page
+  const buyNowBtn = document.getElementById("buyNowBtn");
+  buyNowBtn.addEventListener("click", () => {
+    window.location.href = "https://www.facebook.com/VinCageMislag";
+  });
+  </script>
+</body>
+</html>
